@@ -1,5 +1,8 @@
 # SSR-Net
 SSR-Net mxnet Symbolic/Imperative
+
+implement of SSR-Net mxnet version !!!
+
 Now only complete the network(symbolAPI),update immediately(imperative API),and supplement the main function,
 accuracy function(mxnet custom)
 
