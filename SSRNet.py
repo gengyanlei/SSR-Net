@@ -1,8 +1,7 @@
-
 '''
     implement of SSRNet mxnet version
     (SSR-Net: A Compact Soft Stagewise Regression Network for Age Estimation)[使用了论文部分截图]
-    MXNet(静态版、动态版), 推荐 mxnet.gluon
+    MXNet(静态版Symbolic、动态版Imperative), 推荐 mxnet.gluon
     2D format is [N,C,H,W] !!!   Not [N,H,W,C]
     author is leilei
 '''
@@ -15,7 +14,7 @@
 import mxnet as mx
 
 def conv_bn_act(data, num_filter, activation, name, pool_type=None):
-    '''  对应 conv_bn_act.png
+    '''  对应 Screenshot/conv_bn_act.png
     :param data:        Symbol, input symbol type [N,C,H,W]
     :param num_filter:  int, output_channels
     :param activation:  str, activation functions ['relu', 'sigmoid', 'softrelu', 'softsign', 'tanh']
@@ -31,7 +30,7 @@ def conv_bn_act(data, num_filter, activation, name, pool_type=None):
     return out
 
 def conv_act_drop_fully(data, num_filter, Kth_stage_num, name, pool_type='avg', pool_size=None):
-    '''  对应 conv_act_drop_fully.png
+    '''  对应 Screenshot/conv_act_drop_fully.png
     :param data:         Symbol
     :param num_filter:   int, output channels
     # :param activation:   str, activation functions ['relu', 'sigmoid', 'softrelu', 'softsign', 'tanh']
@@ -54,7 +53,7 @@ def conv_act_drop_fully(data, num_filter, Kth_stage_num, name, pool_type='avg', 
     return layer, layer_mix
 
 def fully_act(data, activation, Kth_stage_num, name):
-    '''  对应 fully_act.png
+    '''  对应 Screenshot/fully_act.png
     :param data:         Symbol
     :param activation:   str, activation functions
     :param Kth_stage_num:int
@@ -66,7 +65,7 @@ def fully_act(data, activation, Kth_stage_num, name):
     return out
 
 def fusion_block_and_regression(x_layer, s_layer, Kth_stage_num, num_filter, name, pool_size=None):
-    '''  对应 fusion_block_and_regression.png
+    '''  对应 Screenshot/fusion_block_and_regression.png
     :param x_layer:        Symbol stream 1
     :param s_layer:        Symbol stream 2
     :param Kth_stage_num:
