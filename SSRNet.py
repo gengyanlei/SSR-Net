@@ -7,7 +7,7 @@
 '''
 ##############################################################################
 
-__all__ = ['get_symbol', '']
+__all__ = ['get_symbol_ssrnet', 'get_imperative_ssrnet']
 
 '''
     静态版 Symbolic API 符号式
@@ -90,7 +90,7 @@ def fusion_block_and_regression(x_layer, s_layer, Kth_stage_num, num_filter, nam
 
     return delta_s, pred_s, local_s
 
-def get_symbol(stage_num, lambda_local=0.25, lambda_d=0.25, has_transform=True):
+def get_symbol_ssrnet(stage_num, lambda_local=0.25, lambda_d=0.25, has_transform=True):
     ''' 主函数
     # :param data:           mx.Symbol; input is mx.sym.Variable()
     :param stage_num:      list or tuple, SSRNet's Hyperparameter, 3 stage [3,3,3]
@@ -326,7 +326,7 @@ class SSRNet(nn.HybridBlock):
         return pred_age
 
 
-def get_imperative(stage_num, lambda_local=0.25, lambda_d=0.25):
+def get_imperative_ssrnet(stage_num, lambda_local=0.25, lambda_d=0.25):
     '''
     :param stage_num:     list or tuple, SSRNet's Hyperparameter, 3 stage [3,3,3]
     :param lambda_local:  float SSR-Net hyperparameter
