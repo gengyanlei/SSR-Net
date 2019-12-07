@@ -163,13 +163,14 @@ def conv_bn_act1(num_filter, activation, pool_type=None):
     :param pool_type:   str [avg, max]
     :return:
     '''
-    net = nn.HybridSequential(nn.Conv2D(channels=num_filter, kernel_size=(3,3), strides=(1,1), padding=(1,1)),
-                              nn.BatchNorm(),
-                              nn.Activation(activation=activation))
+    net = nn.HybridSequential()  #mxnet sequential 只能add
+    net.add(nn.Conv2D(channels=num_filter, kernel_size=(3,3), strides=(1,1), padding=(1,1)),
+            nn.BatchNorm(),
+            nn.Activation(activation=activation))
     if pool_type == 'avg':
-        net.add( nn.AvgPool2D(pool_size=(2,2), strides=(2,2)) )
+        net.add(nn.AvgPool2D(pool_size=(2,2), strides=(2,2)) )
     elif pool_type == 'max':
-        net.add( nn.MaxPool2D(pool_size=(2,2), strides=(2,2)) )
+        net.add(nn.MaxPool2D(pool_size=(2,2), strides=(2,2)) )
 
     return net
 
@@ -180,11 +181,12 @@ def conv_relu_pool_fla(num_filter, pool_type=None, pool_size=None):
     :param pool_size:   tuple int
     :return:  after flatten
     '''
-    net = nn.HybridSequential(nn.Conv2D(channels=num_filter, kernel_size=(1,1), activation='relu'))  # 如果报错， 去掉relu，改用 nn.Activation('relu')
+    net = nn.HybridSequential()  # 如果报错， 去掉relu，改用 nn.Activation('relu')
+    net.add(nn.Conv2D(channels=num_filter, kernel_size=(1,1), activation='relu'))
     if pool_type == 'avg' and pool_size is not None:
-        net.add( nn.AvgPool2D(pool_size=pool_size, strides=pool_size) )
+        net.add(nn.AvgPool2D(pool_size=pool_size, strides=pool_size) )
     elif pool_type == 'max' and pool_size is not None:
-        net.add( nn.MaxPool2D(pool_size=pool_size, strides=pool_size) )
+        net.add(nn.MaxPool2D(pool_size=pool_size, strides=pool_size) )
     net.add(nn.Flatten())
     return net
 
@@ -193,8 +195,9 @@ def drop_fc_relu(Kth_stage_num):
     :param Kth_stage_num: int 第K个 stage num
     :return:
     '''
-    net = nn.HybridSequential(nn.Dropout(0.2),
-                              nn.Dense(units=Kth_stage_num, activation='relu'))  # 若报错 采用nn.Activation('relu')
+    net = nn.HybridSequential()  # 若报错 采用nn.Activation('relu')
+    net.add(nn.Dropout(0.2),
+            nn.Dense(units=Kth_stage_num, activation='relu'))
     return net
 
 def fc_act(Kth_stage_num, activation, has_repeat=False):
