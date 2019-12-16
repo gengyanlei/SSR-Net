@@ -129,7 +129,7 @@ def get_symbol_ssrnet(stage_num, lambda_local=0.25, lambda_d=0.25, has_transform
     i1 = mx.symbol.expand_dims(i1, axis=0)
     a = mx.symbol.broadcast_add(i1, lambda_local * local_s1) * pred_s1  # 广播操作
     a = mx.symbol.sum(a, axis=1, keepdims=True)
-    a = a / (stage_num[0] * (1 + lambda_d * delta_s1))
+    a = a / (stage_num[0] * (1 + lambda_d * delta_s1))  # 直接 * 也支持广播操作
 
     i2 = mx.symbol.arange(0, stage_num[1])
     i2 = mx.symbol.expand_dims(i2, axis=0)
@@ -166,7 +166,7 @@ def conv_bn_act1(num_filter, activation, pool_type=None):
     net = nn.HybridSequential()  #mxnet sequential 只能add
     net.add(nn.Conv2D(channels=num_filter, kernel_size=(3,3), strides=(1,1), padding=(1,1)),
             nn.BatchNorm(),
-            nn.Activation(activation=activation))
+            nn.Activation(activation=activation))  # 可以直接add 多个层
     if pool_type == 'avg':
         net.add(nn.AvgPool2D(pool_size=(2,2), strides=(2,2)) )
     elif pool_type == 'max':
