@@ -11,5 +11,5 @@ Now only complete the network( symbolAPI, imperativeAPI ), later, the main funct
 项目环境：
 Mxnet: 1.5.1, Python:3.5, Cuda:9.0
 
-使用说明: gluon version main function -> "gengyanlei/insightface-gluon"
+使用说明: gluon version main function -> "gengyanlei/insightFace-gluon"
 
